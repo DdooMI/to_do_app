@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/tabs/settings/settings_tab.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/tabs/tasks/tasks_tab.dart';
+import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_scafold_widget.dart';
 
 class BottomNavigatorBar extends StatefulWidget {
   const BottomNavigatorBar({super.key});
@@ -16,9 +17,12 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(),
+    return CustomScafoldWidget(
+        appBar: AppBar(
+          title: Text("To Do app"),
+        ),
         bottomNavigationBar: BottomAppBar(
+          elevation: 0,
           shape: const CircularNotchedRectangle(),
           notchMargin: 10,
           padding: EdgeInsets.zero,
@@ -29,7 +33,7 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
                 setState(() {});
               },
               currentIndex: currentIndex,
-              items: [
+              items: const [
                 BottomNavigationBarItem(icon: Icon(Icons.list), label: "list"),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.settings_outlined), label: "settings")
@@ -37,7 +41,7 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          child: Icon(
+          child: const Icon(
             Icons.add,
             size: 35,
           ),

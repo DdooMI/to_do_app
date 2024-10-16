@@ -3,9 +3,15 @@ import 'package:to_do_app/theme/colors.dart';
 
 class ThemeApp {
   static ThemeData lightTheme = ThemeData(
-      textTheme: const TextTheme(
-          titleLarge: TextStyle(
-              fontSize: 22, color: Colors.white, fontWeight: FontWeight.w700)),
+      textTheme: TextTheme(
+          titleLarge: const TextStyle(
+              fontSize: 22, color: Colors.white, fontWeight: FontWeight.w700),
+          titleMedium: TextStyle(
+              fontSize: 18,
+              color: ColorsApp.primaryColor,
+              fontWeight: FontWeight.w700),
+          titleSmall: const TextStyle(
+              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w700)),
       appBarTheme: AppBarTheme(
           color: ColorsApp.primaryColor,
           foregroundColor: Colors.white,
@@ -25,9 +31,9 @@ class ThemeApp {
           unselectedIconTheme: IconThemeData(color: Colors.grey[350], size: 35),
           selectedIconTheme:
               IconThemeData(color: ColorsApp.primaryColor, size: 35)),
-      colorScheme: const ColorScheme(
+      colorScheme: ColorScheme(
           brightness: Brightness.light,
-          primary: Colors.white,
+          primary: ColorsApp.primaryColor,
           onPrimary: Colors.white,
           secondary: Colors.white,
           onSecondary: Colors.white,
@@ -37,10 +43,10 @@ class ThemeApp {
           onSurface: Colors.white));
   static ThemeData darkTheme = ThemeData(
       scaffoldBackgroundColor: ColorsApp.bgColorDark,
-      colorScheme: const ColorScheme(
+      colorScheme: ColorScheme(
           brightness: Brightness.dark,
-          primary: Colors.white,
-          onPrimary: Colors.white,
+          primary: ColorsApp.primaryColor,
+          onPrimary: ColorsApp.bgColorDark,
           secondary: Colors.white,
           onSecondary: Colors.white,
           error: Colors.white,

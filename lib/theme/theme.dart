@@ -12,8 +12,8 @@ class ThemeApp {
               fontWeight: FontWeight.w700),
           titleSmall: const TextStyle(
               fontSize: 15, color: Colors.black, fontWeight: FontWeight.w700)),
-      appBarTheme: AppBarTheme(
-          color: ColorsApp.primaryColor,
+      appBarTheme: const AppBarTheme(
+          color: Colors.transparent,
           foregroundColor: Colors.white,
           centerTitle: false,
           elevation: 0),

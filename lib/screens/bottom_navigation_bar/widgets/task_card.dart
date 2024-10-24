@@ -34,7 +34,10 @@ class TaskCardWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(10)),
-              child: Icon(Icons.check),
+              child: const Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

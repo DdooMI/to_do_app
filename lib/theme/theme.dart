@@ -3,6 +3,11 @@ import 'package:to_do_app/theme/colors.dart';
 
 class ThemeApp {
   static ThemeData lightTheme = ThemeData(
+      datePickerTheme: DatePickerThemeData(
+        headerBackgroundColor: ColorsApp.primaryColor,
+        headerForegroundColor: Colors.white,
+        backgroundColor: Colors.white,
+      ),
       textTheme: TextTheme(
           titleLarge: const TextStyle(
               fontSize: 22, color: Colors.white, fontWeight: FontWeight.w700),
@@ -11,7 +16,9 @@ class ThemeApp {
               color: ColorsApp.primaryColor,
               fontWeight: FontWeight.w700),
           titleSmall: const TextStyle(
-              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w700)),
+              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w700),
+          bodyMedium: const TextStyle(
+              fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700)),
       appBarTheme: const AppBarTheme(
           color: Colors.transparent,
           foregroundColor: Colors.white,
@@ -35,12 +42,12 @@ class ThemeApp {
           brightness: Brightness.light,
           primary: ColorsApp.primaryColor,
           onPrimary: Colors.white,
-          secondary: Colors.white,
+          secondary: Colors.black,
           onSecondary: Colors.white,
           error: Colors.white,
           onError: Colors.white,
-          surface: Colors.white,
-          onSurface: Colors.white));
+          surface: ColorsApp.primaryColor,
+          onSurface: ColorsApp.primaryColor));
   static ThemeData darkTheme = ThemeData(
       scaffoldBackgroundColor: ColorsApp.bgColorDark,
       colorScheme: ColorScheme(

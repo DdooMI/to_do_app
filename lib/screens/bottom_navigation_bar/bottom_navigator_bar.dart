@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/tabs/settings/settings_tab.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/tabs/tasks/tasks_tab.dart';
+import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_bottom_sheet.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_scafold_widget.dart';
 
 class BottomNavigatorBar extends StatefulWidget {
@@ -13,7 +14,7 @@ class BottomNavigatorBar extends StatefulWidget {
 
 class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
   int currentIndex = 0;
-  List<Widget> tabs = [const TasksTab(), const SettingsTab()];
+  List<Widget> tabs = [TasksTab(), const SettingsTab()];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,15 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
               ]),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+                isScrollControlled: true,
+                backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                context: context,
+                builder: (context) {
+                  return const CustomBottomSheet();
+                });
+          },
           child: const Icon(
             Icons.add,
             size: 35,

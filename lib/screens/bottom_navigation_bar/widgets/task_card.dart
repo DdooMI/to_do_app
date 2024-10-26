@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/models/task_model.dart';
 
 class TaskCardWidget extends StatelessWidget {
-  const TaskCardWidget({super.key});
-
+  const TaskCardWidget({required this.taskModel, super.key});
+  final TaskModel taskModel;
   @override
   Widget build(BuildContext context) {
     double sheight = MediaQuery.of(context).size.height;
@@ -21,11 +22,11 @@ class TaskCardWidget extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
             ),
             title: Text(
-              "Play basketball",
+              taskModel.name,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             subtitle: Text(
-              "rgrgsggr",
+              taskModel.details,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             trailing: Container(

@@ -1,5 +1,6 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/models/task_model.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/task_card.dart';
 
 class TasksTab extends StatefulWidget {
@@ -11,7 +12,12 @@ class TasksTab extends StatefulWidget {
 
 class _TasksTabState extends State<TasksTab> {
   DateTime selectedDate = DateTime.now();
-
+  List<TaskModel> tasks = List.generate(
+      10,
+      (index) => TaskModel(
+          name: 'name $index',
+          details: 'details $index',
+          date: DateTime.now()));
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,10 +67,14 @@ class _TasksTabState extends State<TasksTab> {
         ),
         Expanded(
           child: ListView.builder(
-              padding: const EdgeInsets.only(top: 20),
-              itemBuilder: (context, index) {
-                return const TaskCardWidget();
-              }),
+            padding: const EdgeInsets.only(top: 20),
+            itemBuilder: (context, index) {
+              return TaskCardWidget(
+                taskModel: tasks[index],
+              );
+            },
+            itemCount: tasks.length,
+          ),
         ),
       ],
     );

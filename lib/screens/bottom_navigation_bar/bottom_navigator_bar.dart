@@ -20,7 +20,7 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
   Widget build(BuildContext context) {
     return CustomScafoldWidget(
         appBar: AppBar(
-          title: Text("To Do app"),
+          title: const Text("To Do app"),
         ),
         bottomNavigationBar: BottomAppBar(
           elevation: 0,

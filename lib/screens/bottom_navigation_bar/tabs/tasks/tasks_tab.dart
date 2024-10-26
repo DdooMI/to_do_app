@@ -4,7 +4,7 @@ import 'package:to_do_app/models/task_model.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/task_card.dart';
 
 class TasksTab extends StatefulWidget {
-  TasksTab({super.key});
+  const TasksTab({super.key});
 
   @override
   State<TasksTab> createState() => _TasksTabState();

@@ -39,9 +39,9 @@ class CustomTextFiled extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary, width: 2)),
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide(color: Colors.red, width: 2)),
+                borderSide: const BorderSide(color: Colors.red, width: 2)),
             hintText: hintText,
-            errorStyle: TextStyle(color: Colors.red),
+            errorStyle: const TextStyle(color: Colors.red),
             hintStyle: const TextStyle(
                 color: Colors.grey, fontWeight: FontWeight.normal)),
       ),

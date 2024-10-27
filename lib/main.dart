@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_app/firebase_options.dart';
+import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/bottom_navigator_bar.dart';
 import 'package:to_do_app/screens/splash/splash_screen.dart';
 import 'package:to_do_app/theme/theme.dart';
@@ -10,7 +12,10 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<TaskProvider>(
+        create: (_) => TaskProvider()..getAllTasksByDate()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {

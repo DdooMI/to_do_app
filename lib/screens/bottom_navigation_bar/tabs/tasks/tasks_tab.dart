@@ -1,6 +1,7 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_app/models/task_model.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/task_card.dart';
 
 class TasksTab extends StatefulWidget {
@@ -12,27 +13,22 @@ class TasksTab extends StatefulWidget {
 
 class _TasksTabState extends State<TasksTab> {
   DateTime selectedDate = DateTime.now();
-  List<TaskModel> tasks = List.generate(
-      10,
-      (index) => TaskModel(
-          name: 'name $index',
-          details: 'details $index',
-          date: DateTime.now()));
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TaskProvider>(context);
+
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: EasyInfiniteDateTimeLine(
             onDateChange: (newDate) {
-              selectedDate = newDate;
-              setState(() {});
+              provider.changeSelectedDate(newDate);
             },
             showTimelineHeader: false,
             firstDate: DateTime(2024),
             lastDate: DateTime(2025),
-            focusDate: selectedDate,
+            focusDate: provider.selectedDate,
             dayProps: EasyDayProps(
                 todayStyle: DayStyle(
                   decoration: BoxDecoration(
@@ -67,13 +63,13 @@ class _TasksTabState extends State<TasksTab> {
         ),
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             itemBuilder: (context, index) {
               return TaskCardWidget(
-                taskModel: tasks[index],
+                taskModel: provider.tasks[index],
               );
             },
-            itemCount: tasks.length,
+            itemCount: provider.tasks.length,
           ),
         ),
       ],

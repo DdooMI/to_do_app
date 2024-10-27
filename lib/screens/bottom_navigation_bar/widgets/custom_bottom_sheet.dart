@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/models/task_model.dart';
+import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_elevated_button.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_text_filed.dart';
 
@@ -14,10 +17,14 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   TextEditingController taskNameContorller = TextEditingController();
   TextEditingController taskDetailsContorller = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateFormat dateFormat = DateFormat('yyyy/MM/dd');
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TaskProvider>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Form(
@@ -69,7 +76,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     initialDate: selectedDate,
                   );
                   if (date != null) {
-                    selectedDate = date;
+                    selectedDate = DateTime(date.year, date.month, date.day);
                     setState(() {});
                   }
                 },
@@ -77,11 +84,24 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
             SizedBox(
               width: double.infinity,
               child: CustomElevatedButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      print("done");
-                    }
-                  },
+                  onPressed: isLoading
+                      ? null
+                      : () async {
+                          if (formKey.currentState!.validate()) {
+                            TaskModel task = TaskModel(
+                                name: taskNameContorller.text.trim(),
+                                details: taskDetailsContorller.text.trim(),
+                                date: selectedDate);
+                            setState(() {
+                              isLoading = true;
+                            });
+                            await provider.addTask(task);
+                            Navigator.of(context).pop();
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                        },
                   text: 'Add'),
             ),
             const SizedBox(

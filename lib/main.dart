@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:to_do_app/firebase_options.dart';
 import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/bottom_navigator_bar.dart';
+import 'package:to_do_app/screens/login_signup/signup.dart';
 import 'package:to_do_app/screens/splash/splash_screen.dart';
 import 'package:to_do_app/theme/theme.dart';
 
@@ -37,7 +38,7 @@ class _MyAppState extends State<MyApp> {
         SplashScreen.routeName: (_) => const SplashScreen(),
         BottomNavigatorBar.routeName: (_) => const BottomNavigatorBar(),
       },
-      home: const SplashScreen(),
+      home: const SignupScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

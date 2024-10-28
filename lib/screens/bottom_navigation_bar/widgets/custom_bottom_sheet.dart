@@ -26,7 +26,11 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
     var provider = Provider.of<TaskProvider>(context, listen: false);
 
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.only(
+          top: 20.0,
+          left: 20,
+          right: 20,
+          bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Form(
         key: formKey,
         child: Column(

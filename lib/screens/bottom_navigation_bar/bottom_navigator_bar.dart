@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/tabs/settings/settings_tab.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/tabs/tasks/tasks_tab.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_bottom_sheet.dart';
@@ -41,15 +43,24 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
               ]),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheet(
-                isScrollControlled: true,
-                backgroundColor: Theme.of(context).colorScheme.onPrimary,
-                context: context,
-                builder: (context) {
-                  return const CustomBottomSheet();
-                });
-          },
+          backgroundColor: Provider.of<TaskProvider>(context)
+                  .selectedDate
+                  .isBefore(DateTime.now().subtract(Duration(days: 1)))
+              ? Colors.grey
+              : null,
+          onPressed: Provider.of<TaskProvider>(context)
+                  .selectedDate
+                  .isBefore(DateTime.now().subtract(Duration(days: 1)))
+              ? null
+              : () {
+                  showModalBottomSheet(
+                      isScrollControlled: true,
+                      backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                      context: context,
+                      builder: (context) {
+                        return const CustomBottomSheet();
+                      });
+                },
           child: const Icon(
             Icons.add,
             size: 35,

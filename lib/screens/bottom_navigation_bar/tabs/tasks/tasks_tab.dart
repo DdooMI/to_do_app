@@ -1,6 +1,7 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do_app/models/task_model.dart';
 import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/task_card.dart';
 
@@ -13,22 +14,22 @@ class TasksTab extends StatefulWidget {
 
 class _TasksTabState extends State<TasksTab> {
   DateTime selectedDate = DateTime.now();
+  DateTime focusDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<TaskProvider>(context);
-
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: EasyInfiniteDateTimeLine(
             onDateChange: (newDate) {
-              provider.changeSelectedDate(newDate);
+              focusDate = newDate;
+              setState(() {});
             },
             showTimelineHeader: false,
             firstDate: DateTime(2024),
             lastDate: DateTime(2025),
-            focusDate: provider.selectedDate,
+            focusDate: focusDate,
             dayProps: EasyDayProps(
                 todayStyle: DayStyle(
                   decoration: BoxDecoration(
@@ -61,17 +62,44 @@ class _TasksTabState extends State<TasksTab> {
                         borderRadius: BorderRadius.circular(15)))),
           ),
         ),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            itemBuilder: (context, index) {
-              return TaskCardWidget(
-                taskModel: provider.tasks[index],
-              );
-            },
-            itemCount: provider.tasks.length,
-          ),
-        ),
+        StreamBuilder<List<TaskModel>?>(
+            stream: Provider.of<TaskProvider>(context, listen: false)
+                .getAllTasksByDate(focusDate),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else {
+                var data = snapshot.data;
+                if (data == null || data.isEmpty) {
+                  return Expanded(
+                    child: Center(
+                      child: Text(
+                        "No Tasks Today",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontSize: 22),
+                      ),
+                    ),
+                  );
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    itemBuilder: (context, index) {
+                      return TaskCardWidget(
+                        taskModel: data[index],
+                      );
+                    },
+                    itemCount: data.length,
+                  ),
+                );
+              }
+            })
       ],
     );
   }

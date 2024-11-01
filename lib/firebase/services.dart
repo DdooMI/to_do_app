@@ -37,12 +37,15 @@ class Services {
     return taskQuery.docs.map((e) => e.data()).toList();
   }
 
-  static Future<List<TaskModel>> getTasksByDate(DateTime selectedDate) async {
+  static getTasksByDate(DateTime selectedDate) async* {
     CollectionReference<TaskModel> tasksCollection = getTaskCollection();
-    QuerySnapshot<TaskModel> taskQuery = await tasksCollection
+    Stream<QuerySnapshot<TaskModel>> taskQuery = tasksCollection
         .where('date', isEqualTo: Timestamp.fromDate(selectedDate))
-        .get();
-    return taskQuery.docs.map((e) => e.data()).toList();
+        .snapshots();
+    var data = taskQuery.map((event) => event.docs.map((e) {
+          return e.data();
+        }).toList());
+    yield* data;
   }
 
   static Future<UserModel?> login(String email, String password) async {

@@ -6,13 +6,10 @@ import 'package:to_do_app/models/task_model.dart';
 class TaskProvider extends ChangeNotifier {
   List<TaskModel> tasks = [];
   DateTime selectedDate = DateTime.now();
-
-  Future<void> getAllTasksByDate() async {
+  Stream<List<TaskModel>> getAllTasksByDate(DateTime selectedDate) async* {
     try {
-      List<TaskModel> allTasks = await Services.getTasksByDate(
+      yield* Services.getTasksByDate(
           DateTime(selectedDate.year, selectedDate.month, selectedDate.day));
-      tasks = allTasks;
-      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -29,12 +26,6 @@ class TaskProvider extends ChangeNotifier {
           textColor: Colors.white,
           fontSize: 16.0);
     });
-    getAllTasksByDate();
-  }
-
-  changeSelectedDate(DateTime date) async {
-    selectedDate = date;
-    await getAllTasksByDate();
   }
 
   deleteTask(String id) async {
@@ -49,7 +40,6 @@ class TaskProvider extends ChangeNotifier {
             textColor: Colors.white,
             fontSize: 16.0);
       });
-      getAllTasksByDate();
     } catch (e) {
       print(e);
     }

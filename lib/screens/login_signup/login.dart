@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/providers/user_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/bottom_navigator_bar.dart';
 import 'package:to_do_app/screens/login_signup/signup.dart';
@@ -90,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     Provider.of<UserProvider>(context, listen: false).loading
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : LoginButtonWidget(
                             onPressed: () async {
                               if (formKey.currentState!.validate()) {
@@ -103,9 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                               listen: false)
                                           .userModel !=
                                       null) {
-                                    Provider.of<TaskProvider>(context,
-                                            listen: false)
-                                        .getAllTasksByDate();
                                     Navigator.of(context).pushReplacementNamed(
                                         BottomNavigatorBar.routeName);
                                   }

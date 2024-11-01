@@ -29,7 +29,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         LoginScreen.routeName: (_) => const LoginScreen(),
         SignupScreen.routeName: (_) => const SignupScreen()
       },
-      home: const LoginScreen(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

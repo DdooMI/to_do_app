@@ -9,7 +9,6 @@ class LoginButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).size.width * 0.15,
         right: MediaQuery.of(context).size.width * 0.15,
         left: MediaQuery.of(context).size.width * 0.15,
       ),

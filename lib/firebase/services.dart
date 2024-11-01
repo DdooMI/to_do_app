@@ -1,11 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:to_do_app/models/task_model.dart';
+import 'package:to_do_app/models/user_model.dart';
 
 class Services {
   static CollectionReference<TaskModel> getTaskCollection() =>
-      FirebaseFirestore.instance.collection('tasks').withConverter<TaskModel>(
+      getUserCollection()
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('tasks')
+          .withConverter<TaskModel>(
+              fromFirestore: (snapshot, _) =>
+                  TaskModel.fromJson(snapshot.data() ?? {}),
+              toFirestore: (value, _) => value.toJson());
+
+  static CollectionReference<UserModel> getUserCollection() =>
+      FirebaseFirestore.instance.collection('users').withConverter<UserModel>(
           fromFirestore: (snapshot, _) =>
-              TaskModel.fromJson(snapshot.data() ?? {}),
+              UserModel.fromJson(snapshot.data() ?? {}),
           toFirestore: (value, _) => value.toJson());
 
   static Future<void> addTask(TaskModel task) {
@@ -32,5 +43,35 @@ class Services {
         .where('date', isEqualTo: Timestamp.fromDate(selectedDate))
         .get();
     return taskQuery.docs.map((e) => e.data()).toList();
+  }
+
+  static Future<UserModel?> login(String email, String password) async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+    return getUser();
+  }
+
+  static Future<UserModel> signup(UserModel userModel, String password) async {
+    UserCredential credential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: userModel.email!, password: password);
+    userModel.id = credential.user?.uid;
+    await createUser(userModel);
+    return userModel;
+  }
+
+  static Future<void> signout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  static Future<UserModel?> getUser() async {
+    DocumentSnapshot<UserModel> documentSnapshot = await getUserCollection()
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    return documentSnapshot.data();
+  }
+
+  static Future<void> createUser(UserModel userModel) async {
+    return await getUserCollection().doc(userModel.id).set(userModel);
   }
 }

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/firebase_options.dart';
 import 'package:to_do_app/providers/task_provider.dart';
+import 'package:to_do_app/providers/user_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/bottom_navigator_bar.dart';
+import 'package:to_do_app/screens/login_signup/login.dart';
 import 'package:to_do_app/screens/login_signup/signup.dart';
 import 'package:to_do_app/screens/splash/splash_screen.dart';
 import 'package:to_do_app/theme/theme.dart';
@@ -14,8 +16,8 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<TaskProvider>(
-        create: (_) => TaskProvider()..getAllTasksByDate()),
+    ChangeNotifierProvider<TaskProvider>(create: (_) => TaskProvider()),
+    ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
   ], child: const MyApp()));
 }
 
@@ -37,8 +39,10 @@ class _MyAppState extends State<MyApp> {
       routes: {
         SplashScreen.routeName: (_) => const SplashScreen(),
         BottomNavigatorBar.routeName: (_) => const BottomNavigatorBar(),
+        LoginScreen.routeName: (_) => const LoginScreen(),
+        SignupScreen.routeName: (_) => const SignupScreen()
       },
-      home: const SignupScreen(),
+      home: const LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

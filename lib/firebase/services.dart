@@ -37,14 +37,13 @@ class Services {
     return taskQuery.docs.map((e) => e.data()).toList();
   }
 
-  static getTasksByDate(DateTime selectedDate) async* {
+  static Stream<List<TaskModel>> getTasksByDate(DateTime selectedDate) async* {
     CollectionReference<TaskModel> tasksCollection = getTaskCollection();
     Stream<QuerySnapshot<TaskModel>> taskQuery = tasksCollection
         .where('date', isEqualTo: Timestamp.fromDate(selectedDate))
         .snapshots();
-    var data = taskQuery.map((event) => event.docs.map((e) {
-          return e.data();
-        }).toList());
+    Stream<List<TaskModel>> data =
+        taskQuery.map((event) => event.docs.map((e) => e.data()).toList());
     yield* data;
   }
 

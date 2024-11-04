@@ -13,7 +13,6 @@ class TasksTab extends StatefulWidget {
 }
 
 class _TasksTabState extends State<TasksTab> {
-  DateTime selectedDate = DateTime.now();
   DateTime focusDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -24,6 +23,8 @@ class _TasksTabState extends State<TasksTab> {
           child: EasyInfiniteDateTimeLine(
             onDateChange: (newDate) {
               focusDate = newDate;
+              Provider.of<TaskProvider>(context, listen: false)
+                  .changeSelectedDate(newDate);
               setState(() {});
             },
             showTimelineHeader: false,

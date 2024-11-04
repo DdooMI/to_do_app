@@ -45,12 +45,12 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Provider.of<TaskProvider>(context)
                   .selectedDate
-                  .isBefore(DateTime.now().subtract(Duration(days: 1)))
+                  .isBefore(DateTime.now().subtract(const Duration(days: 1)))
               ? Colors.grey
               : null,
           onPressed: Provider.of<TaskProvider>(context)
                   .selectedDate
-                  .isBefore(DateTime.now().subtract(Duration(days: 1)))
+                  .isBefore(DateTime.now().subtract(const Duration(days: 1)))
               ? null
               : () {
                   showModalBottomSheet(

@@ -16,16 +16,27 @@ class TaskProvider extends ChangeNotifier {
   }
 
   Future<void> addTask(TaskModel task) async {
-    await Services.addTask(task).then((value) {
+    try {
+      await Services.addTask(task).then((value) {
+        Fluttertoast.showToast(
+            msg: "Task Added",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      });
+    } catch (e) {
       Fluttertoast.showToast(
-          msg: "Task Added",
+          msg: "something went wrong",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.blue,
           textColor: Colors.white,
           fontSize: 16.0);
-    });
+    }
   }
 
   deleteTask(String id) async {
@@ -41,7 +52,19 @@ class TaskProvider extends ChangeNotifier {
             fontSize: 16.0);
       });
     } catch (e) {
-      print(e);
+      Fluttertoast.showToast(
+          msg: "something went wrong",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blue,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
+  }
+
+  changeSelectedDate(DateTime date) {
+    selectedDate = date;
+    notifyListeners();
   }
 }

@@ -31,12 +31,6 @@ class Services {
     return tasksCollection.doc(id).delete();
   }
 
-  static Future<List<TaskModel>> getTasks() async {
-    CollectionReference<TaskModel> tasksCollection = getTaskCollection();
-    QuerySnapshot<TaskModel> taskQuery = await tasksCollection.get();
-    return taskQuery.docs.map((e) => e.data()).toList();
-  }
-
   static Stream<List<TaskModel>> getTasksByDate(DateTime selectedDate) async* {
     CollectionReference<TaskModel> tasksCollection = getTaskCollection();
     Stream<QuerySnapshot<TaskModel>> taskQuery = tasksCollection

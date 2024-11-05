@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/models/task_model.dart';
 import 'package:to_do_app/providers/task_provider.dart';
+import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_bottom_sheet_edit.dart';
 import 'package:to_do_app/theme/colors.dart';
 
 class TaskCardWidget extends StatelessWidget {
@@ -11,7 +12,12 @@ class TaskCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double sheight = MediaQuery.of(context).size.height;
-    double swidth = MediaQuery.of(context).size.width;
+
+    bool dayBefore = Provider.of<TaskProvider>(context)
+        .selectedDate
+        .isBefore(DateTime.now().subtract(const Duration(days: 1)));
+    bool taskisDone = taskModel.isDone;
+
     return Card(
       elevation: 5,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -19,7 +25,7 @@ class TaskCardWidget extends StatelessWidget {
       child: Slidable(
         startActionPane: ActionPane(
           motion: const ScrollMotion(),
-          extentRatio: 0.6,
+          extentRatio: dayBefore ? 0.3 : 0.6,
           children: [
             SlidableAction(
               onPressed: (context) async {
@@ -33,16 +39,26 @@ class TaskCardWidget extends StatelessWidget {
               borderRadius:
                   const BorderRadius.horizontal(left: Radius.circular(12)),
             ),
-            SlidableAction(
-              onPressed: (context) async {
-                Provider.of<TaskProvider>(context, listen: false)
-                    .deleteTask(taskModel.id);
-              },
-              backgroundColor: ColorsApp.primaryColor,
-              foregroundColor: Colors.white,
-              icon: Icons.edit,
-              label: 'Edit',
-            ),
+            dayBefore
+                ? Container()
+                : SlidableAction(
+                    onPressed: (context) async {
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                          context: context,
+                          builder: (context) {
+                            return CustomBottomSheetEdit(
+                              taskModel: taskModel,
+                            );
+                          });
+                    },
+                    backgroundColor: ColorsApp.primaryColor,
+                    foregroundColor: Colors.white,
+                    icon: Icons.edit,
+                    label: 'Edit',
+                  ),
           ],
         ),
         child: Container(
@@ -57,27 +73,45 @@ class TaskCardWidget extends StatelessWidget {
                 leading: Container(
                   width: 4,
                   height: sheight * 0.09,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: taskisDone
+                      ? ColorsApp.greenColor
+                      : Theme.of(context).colorScheme.primary,
                 ),
                 title: Text(
                   taskModel.name,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: taskisDone
+                      ? Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: ColorsApp.greenColor)
+                      : Theme.of(context).textTheme.titleMedium,
                 ),
                 subtitle: Text(
                   taskModel.details,
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: taskisDone
+                      ? Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: ColorsApp.greenColor)
+                      : Theme.of(context).textTheme.titleSmall,
                 ),
-                trailing: Container(
-                  width: swidth * .15,
-                  height: sheight * .035,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Icon(
-                    Icons.check,
-                    color: Colors.white,
-                  ),
-                ),
+                trailing: Checkbox(
+                    checkColor: Colors.white,
+                    fillColor: taskisDone
+                        ? WidgetStatePropertyAll(ColorsApp.greenColor)
+                        : const WidgetStatePropertyAll(Colors.white),
+                    value: taskModel.isDone,
+                    onChanged: (value) async {
+                      TaskModel editTask = taskModel.copyWith(
+                          id: taskModel.id,
+                          isDone: !taskModel.isDone,
+                          updatedName: taskModel.name,
+                          updatedDetails: taskModel.details,
+                          date: taskModel.date);
+
+                      await Provider.of<TaskProvider>(context, listen: false)
+                          .editTask(editTask);
+                    }),
               ),
             ),
           ),

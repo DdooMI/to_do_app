@@ -31,4 +31,20 @@ class TaskModel {
       'isDone': isDone
     };
   }
+
+  TaskModel copyWith({
+    String? id,
+    String? updatedName,
+    String? updatedDetails,
+    DateTime? date,
+    bool? isDone,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      name: updatedName ?? name,
+      details: updatedDetails ?? details,
+      date: date ?? this.date,
+      isDone: isDone ?? this.isDone,
+    );
+  }
 }

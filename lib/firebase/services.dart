@@ -21,14 +21,16 @@ class Services {
 
   static Future<void> addTask(TaskModel task) {
     CollectionReference<TaskModel> tasksCollection = getTaskCollection();
-    return tasksCollection.doc(task.id).update(task.toJson());
+    DocumentReference<TaskModel> documentReference = tasksCollection.doc();
+    task.id = documentReference.id;
+    return documentReference.set(task);
   }
 
   static Future<void> editTask(TaskModel task) {
     CollectionReference<TaskModel> tasksCollection = getTaskCollection();
-    DocumentReference<TaskModel> documentReference = tasksCollection.doc();
-    task.id = documentReference.id;
-    return documentReference.set(task);
+    DocumentReference<TaskModel> documentReference =
+        tasksCollection.doc(task.id);
+    return documentReference.update(task.toJson());
   }
 
   static Future<void> deleteTask(String id) {

@@ -52,6 +52,7 @@ class TaskProvider extends ChangeNotifier {
             fontSize: 16.0);
       });
     } catch (e) {
+      print("errrrrroorrr$e");
       Fluttertoast.showToast(
           msg: "something went wrong",
           toastLength: Toast.LENGTH_SHORT,

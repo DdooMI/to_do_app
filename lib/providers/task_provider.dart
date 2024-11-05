@@ -39,7 +39,31 @@ class TaskProvider extends ChangeNotifier {
     }
   }
 
-  deleteTask(String id) async {
+  Future<void> editTask(TaskModel task) async {
+    try {
+      await Services.editTask(task).then((value) {
+        Fluttertoast.showToast(
+            msg: "Task Updated",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      });
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "something went wrong",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blue,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
+  Future<void> deleteTask(String id) async {
     try {
       await Services.deleteTask(id).then((value) {
         Fluttertoast.showToast(

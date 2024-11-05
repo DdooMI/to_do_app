@@ -21,6 +21,11 @@ class Services {
 
   static Future<void> addTask(TaskModel task) {
     CollectionReference<TaskModel> tasksCollection = getTaskCollection();
+    return tasksCollection.doc(task.id).update(task.toJson());
+  }
+
+  static Future<void> editTask(TaskModel task) {
+    CollectionReference<TaskModel> tasksCollection = getTaskCollection();
     DocumentReference<TaskModel> documentReference = tasksCollection.doc();
     task.id = documentReference.id;
     return documentReference.set(task);

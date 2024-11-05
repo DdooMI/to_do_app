@@ -88,27 +88,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Column(
                   children: [
-                    Provider.of<UserProvider>(context, listen: false).loading
-                        ? const CircularProgressIndicator()
-                        : LoginButtonWidget(
-                            onPressed: () async {
-                              if (formKey.currentState!.validate()) {
-                                await Provider.of<UserProvider>(context,
-                                        listen: false)
-                                    .login(emailcontroller.text,
-                                        passwordcontroller.text)
-                                    .then((value) {
-                                  if (Provider.of<UserProvider>(context,
-                                              listen: false)
-                                          .userModel !=
-                                      null) {
-                                    Navigator.of(context).pushReplacementNamed(
-                                        BottomNavigatorBar.routeName);
-                                  }
-                                });
-                              }
-                            },
-                            text: "Log in"),
+                    LoginButtonWidget(
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            await Provider.of<UserProvider>(context,
+                                    listen: false)
+                                .login(emailcontroller.text,
+                                    passwordcontroller.text)
+                                .then((value) {
+                              Navigator.of(context).pushReplacementNamed(
+                                  BottomNavigatorBar.routeName);
+                            });
+                          }
+                        },
+                        text: "Log in"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

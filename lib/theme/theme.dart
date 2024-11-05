@@ -23,6 +23,8 @@ class ThemeApp {
           color: Colors.transparent,
           foregroundColor: Colors.white,
           centerTitle: false,
+          titleTextStyle: TextStyle(
+              fontSize: 30, color: Colors.white, fontWeight: FontWeight.w700),
           elevation: 0),
       scaffoldBackgroundColor: ColorsApp.bgColorLight,
       floatingActionButtonTheme: FloatingActionButtonThemeData(

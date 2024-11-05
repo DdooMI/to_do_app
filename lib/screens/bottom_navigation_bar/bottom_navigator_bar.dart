@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/providers/task_provider.dart';
-import 'package:to_do_app/screens/bottom_navigation_bar/tabs/settings/settings_tab.dart';
-import 'package:to_do_app/screens/bottom_navigation_bar/tabs/tasks/tasks_tab.dart';
+import 'package:to_do_app/screens/bottom_navigation_bar/tabs/settings_tab.dart';
+import 'package:to_do_app/screens/bottom_navigation_bar/tabs/tasks_tab.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_bottom_sheet.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_scafold_widget.dart';
 
@@ -22,7 +22,9 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
   Widget build(BuildContext context) {
     return CustomScafoldWidget(
         appBar: AppBar(
-          title: const Text("To Do app"),
+          title: const Text(
+            "To Do",
+          ),
         ),
         bottomNavigationBar: BottomAppBar(
           elevation: 0,

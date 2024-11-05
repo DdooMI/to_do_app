@@ -106,31 +106,23 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 Column(
                   children: [
-                    Provider.of<UserProvider>(context, listen: false).loading
-                        ? CircularProgressIndicator()
-                        : LoginButtonWidget(
-                            onPressed: () async {
-                              if (formKey.currentState!.validate()) {
-                                await Provider.of<UserProvider>(context,
-                                        listen: false)
-                                    .signup(
-                                        UserModel(
-                                            name: namecontroller.text,
-                                            email: emailcontroller.text),
-                                        passwordcontroller.text)
-                                    .then((value) {
-                                  Provider.of<UserProvider>(context,
-                                                  listen: false)
-                                              .userModel !=
-                                          null
-                                      ? Navigator.of(context)
-                                          .pushReplacementNamed(
-                                              LoginScreen.routeName)
-                                      : null;
-                                });
-                              }
-                            },
-                            text: "Sign up"),
+                    LoginButtonWidget(
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            await Provider.of<UserProvider>(context,
+                                    listen: false)
+                                .signup(
+                                    UserModel(
+                                        name: namecontroller.text,
+                                        email: emailcontroller.text),
+                                    passwordcontroller.text)
+                                .then((value) {
+                              Navigator.of(context)
+                                  .pushReplacementNamed(LoginScreen.routeName);
+                            });
+                          }
+                        },
+                        text: "Sign up"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

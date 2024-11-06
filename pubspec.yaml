@@ -46,6 +46,8 @@ dependencies:
   fluttertoast: ^8.2.8
   firebase_auth: ^5.3.1
   shared_preferences: ^2.3.2
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

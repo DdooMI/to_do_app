@@ -14,12 +14,13 @@ class CustomTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
         controller: controller,
         validator: validator,
         maxLines: maxLines,
-        style: const TextStyle(fontSize: 20, color: Colors.black),
+        style: TextStyle(
+            fontSize: 20, color: Theme.of(context).colorScheme.secondary),
         decoration: InputDecoration(
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),

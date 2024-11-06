@@ -123,7 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
-                                  ?.copyWith(fontSize: 15, color: Colors.black),
+                                  ?.copyWith(
+                                      fontSize: 15,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
                             )),
                       ],
                     )

@@ -21,10 +21,9 @@ class LoginButtonWidget extends StatelessWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary),
                 child: Text(
                   text,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 22,
+                      color: Theme.of(context).colorScheme.onPrimary),
                 )),
           ),
         ],

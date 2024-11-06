@@ -97,6 +97,8 @@ class TaskCardWidget extends StatelessWidget {
                 ),
                 trailing: Checkbox(
                     checkColor: Colors.white,
+                    side: BorderSide(
+                        width: 2, color: Theme.of(context).colorScheme.primary),
                     fillColor: taskisDone
                         ? WidgetStatePropertyAll(ColorsApp.greenColor)
                         : const WidgetStatePropertyAll(Colors.white),

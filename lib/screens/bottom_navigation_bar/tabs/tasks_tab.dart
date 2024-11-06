@@ -33,6 +33,18 @@ class _TasksTabState extends State<TasksTab> {
             focusDate: focusDate,
             dayProps: EasyDayProps(
                 todayStyle: DayStyle(
+                  dayNumStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.secondary),
+                  dayStrStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.secondary),
+                  monthStrStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.secondary),
                   decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.onPrimary,
                       borderRadius: BorderRadius.circular(15),
@@ -41,6 +53,18 @@ class _TasksTabState extends State<TasksTab> {
                           width: 4)),
                 ),
                 inactiveDayStyle: DayStyle(
+                  dayNumStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.secondary),
+                  dayStrStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.secondary),
+                  monthStrStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.secondary),
                   decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.onPrimary,
                       borderRadius: BorderRadius.circular(15)),

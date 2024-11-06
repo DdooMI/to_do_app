@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/firebase/services.dart';
+import 'package:to_do_app/providers/dark_provider.dart';
 import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_listTile_settings_widget.dart';
 import 'package:to_do_app/screens/login_signup/login.dart';
@@ -16,16 +17,25 @@ class SettingsTab extends StatelessWidget {
           CustomListtileSettingsWidget(
               title: "Dark Mode",
               trailing: Switch(
+                  trackOutlineColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.primary),
+                  thumbColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.primary),
                   inactiveTrackColor: Theme.of(context).colorScheme.onSecondary,
-                  activeColor: Theme.of(context).colorScheme.onSurface,
-                  value: false,
-                  onChanged: (value) {})),
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  value:
+                      Provider.of<DarkProvider>(context, listen: false).isDark,
+                  onChanged: (value) {
+                    Provider.of<DarkProvider>(context, listen: false)
+                        .changeThemeMode(
+                            value ? ThemeMode.dark : ThemeMode.light);
+                  })),
           CustomListtileSettingsWidget(
               title: "Language",
               trailing: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: DropdownButton<String>(
@@ -42,7 +52,7 @@ class SettingsTab extends StatelessWidget {
                       )
                     ],
                     iconEnabledColor: Theme.of(context).colorScheme.onSecondary,
-                    dropdownColor: Theme.of(context).colorScheme.surface,
+                    dropdownColor: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(20),
                     underline: Container(),
                     value: "en",
@@ -59,9 +69,10 @@ class SettingsTab extends StatelessWidget {
             },
             child: CustomListtileSettingsWidget(
                 title: "Sign Out",
-                trailing: const Icon(
+                trailing: Icon(
                   Icons.logout_outlined,
                   size: 40,
+                  color: Theme.of(context).colorScheme.primary,
                 )),
           ),
         ],

@@ -5,33 +5,41 @@ class ThemeApp {
   static ThemeData lightTheme = ThemeData(
       datePickerTheme: DatePickerThemeData(
         headerBackgroundColor: ColorsApp.primaryColor,
-        headerForegroundColor: Colors.white,
-        backgroundColor: Colors.white,
+        headerForegroundColor: ColorsApp.bgColorLight,
+        backgroundColor: ColorsApp.bgColorLight,
       ),
       textTheme: TextTheme(
-          titleLarge: const TextStyle(
-              fontSize: 22, color: Colors.white, fontWeight: FontWeight.w700),
+          titleLarge: TextStyle(
+              fontSize: 22,
+              color: ColorsApp.bgColorLight,
+              fontWeight: FontWeight.w700),
           titleMedium: TextStyle(
               fontSize: 18,
               color: ColorsApp.primaryColor,
               fontWeight: FontWeight.w700),
-          titleSmall: const TextStyle(
-              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w700),
-          bodyMedium: const TextStyle(
-              fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700)),
-      appBarTheme: const AppBarTheme(
-          color: Colors.transparent,
+          titleSmall: TextStyle(
+              fontSize: 15,
+              color: ColorsApp.bgColorDark,
+              fontWeight: FontWeight.w700),
+          bodyMedium: TextStyle(
+              fontSize: 18,
+              color: ColorsApp.bgColorLight,
+              fontWeight: FontWeight.w700)),
+      appBarTheme: AppBarTheme(
+          backgroundColor: ColorsApp.primaryColor,
           foregroundColor: Colors.white,
           centerTitle: false,
           titleTextStyle: TextStyle(
-              fontSize: 30, color: Colors.white, fontWeight: FontWeight.w700),
+              fontSize: 30,
+              color: ColorsApp.bgColorLight,
+              fontWeight: FontWeight.w700),
           elevation: 0),
       scaffoldBackgroundColor: ColorsApp.bgColorLight,
       floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: ColorsApp.primaryColor,
-          foregroundColor: Colors.white,
-          shape: const CircleBorder(
-              side: BorderSide(color: Colors.white, width: 4))),
+          foregroundColor: ColorsApp.bgColorLight,
+          shape: CircleBorder(
+              side: BorderSide(color: ColorsApp.bgColorLight, width: 4))),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
@@ -44,22 +52,67 @@ class ThemeApp {
           brightness: Brightness.light,
           primary: ColorsApp.primaryColor,
           onPrimary: Colors.white,
-          secondary: Colors.black,
+          secondary: ColorsApp.bgColorDark,
           onSecondary: Colors.white,
           error: Colors.white,
           onError: Colors.white,
           surface: ColorsApp.primaryColor,
           onSurface: ColorsApp.primaryColor));
   static ThemeData darkTheme = ThemeData(
-      scaffoldBackgroundColor: ColorsApp.bgColorDark,
-      colorScheme: ColorScheme(
-          brightness: Brightness.dark,
-          primary: ColorsApp.primaryColor,
-          onPrimary: ColorsApp.bgColorDark,
-          secondary: Colors.white,
-          onSecondary: Colors.white,
-          error: Colors.white,
-          onError: Colors.white,
-          surface: Colors.white,
-          onSurface: Colors.white));
+    datePickerTheme: DatePickerThemeData(
+      headerBackgroundColor: ColorsApp.primaryColor,
+      headerForegroundColor: ColorsApp.bgColorDark,
+      backgroundColor: ColorsApp.bgColorDark,
+    ),
+    textTheme: TextTheme(
+        titleLarge: TextStyle(
+            fontSize: 22,
+            color: ColorsApp.bgColorDark,
+            fontWeight: FontWeight.w700),
+        titleMedium: TextStyle(
+            fontSize: 18,
+            color: ColorsApp.primaryColor,
+            fontWeight: FontWeight.w700),
+        titleSmall: TextStyle(
+            fontSize: 15,
+            color: ColorsApp.bgColorLight,
+            fontWeight: FontWeight.w700),
+        bodyMedium: TextStyle(
+            fontSize: 18,
+            color: ColorsApp.bgColorLight,
+            fontWeight: FontWeight.w700)),
+    appBarTheme: AppBarTheme(
+        backgroundColor: ColorsApp.primaryColor,
+        foregroundColor: Colors.white,
+        centerTitle: false,
+        titleTextStyle: TextStyle(
+            fontSize: 30,
+            color: ColorsApp.bgColorDark,
+            fontWeight: FontWeight.w700),
+        elevation: 0),
+    scaffoldBackgroundColor: ColorsApp.bgColorDark,
+    colorScheme: ColorScheme(
+        brightness: Brightness.dark,
+        primary: ColorsApp.primaryColor,
+        onPrimary: ColorsApp.darkBlueColor,
+        secondary: ColorsApp.bgColorLight,
+        onSecondary: Colors.white,
+        error: Colors.white,
+        onError: Colors.white,
+        surface: Colors.white,
+        onSurface: Colors.white),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: ColorsApp.primaryColor,
+        foregroundColor: ColorsApp.darkBlueColor,
+        shape: CircleBorder(
+            side: BorderSide(color: ColorsApp.bgColorDark, width: 4))),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: ColorsApp.darkBlueColor,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        unselectedIconTheme: IconThemeData(color: Colors.grey[350], size: 35),
+        selectedIconTheme:
+            IconThemeData(color: ColorsApp.primaryColor, size: 35)),
+  );
 }

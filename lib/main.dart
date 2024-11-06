@@ -21,8 +21,7 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<LocalizationProvider>(
-        create: (_) =>
-            LocalizationProvider(locale: prefs.getString("local") ?? "en")),
+        create: (_) => LocalizationProvider()),
     ChangeNotifierProvider<DarkProvider>(
         create: (_) => DarkProvider(dark: prefs.getBool("isDark") ?? false)),
     ChangeNotifierProvider<TaskProvider>(create: (_) => TaskProvider()),
@@ -43,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeApp.lightTheme,
       darkTheme: ThemeApp.darkTheme,
-      themeMode: ThemeMode.dark,
+      themeMode: Provider.of<DarkProvider>(context).appThemeMode,
       routes: {
         SplashScreen.routeName: (_) => const SplashScreen(),
         BottomNavigatorBar.routeName: (_) => const BottomNavigatorBar(),

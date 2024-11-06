@@ -33,7 +33,8 @@ class _LoginTextFormFieldWidgetState extends State<LoginTextFormFieldWidget> {
         validator: widget.validator,
         keyboardType: widget.keyboardType,
         obscureText: widget.password && !showPass,
-        style: const TextStyle(fontSize: 20, color: Colors.black),
+        style: TextStyle(
+            fontSize: 20, color: Theme.of(context).colorScheme.secondary),
         decoration: InputDecoration(
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),

@@ -16,7 +16,7 @@ class LocalizationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  LocalizationProvider({required String locale}) {
-    appLocal = locale;
-  }
+  // LocalizationProvider({required String locale}) {
+  //   appLocal = locale;
+  // }
 }

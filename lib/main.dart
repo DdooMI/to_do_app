@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do_app/firebase_options.dart';
+import 'package:to_do_app/providers/dark_provider.dart';
+import 'package:to_do_app/providers/localization_provider.dart';
 import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/providers/user_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/bottom_navigator_bar.dart';
@@ -15,7 +18,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<LocalizationProvider>(
+        create: (_) =>
+            LocalizationProvider(locale: prefs.getString("local") ?? "en")),
+    ChangeNotifierProvider<DarkProvider>(
+        create: (_) => DarkProvider(dark: prefs.getBool("isDark") ?? false)),
     ChangeNotifierProvider<TaskProvider>(create: (_) => TaskProvider()),
     ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
   ], child: const MyApp()));
@@ -34,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeApp.lightTheme,
       darkTheme: ThemeApp.darkTheme,
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       routes: {
         SplashScreen.routeName: (_) => const SplashScreen(),
         BottomNavigatorBar.routeName: (_) => const BottomNavigatorBar(),

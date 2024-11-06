@@ -16,7 +16,7 @@ class BottomNavigatorBar extends StatefulWidget {
 
 class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
   int currentIndex = 0;
-  List<Widget> tabs = [TasksTab(), const SettingsTab()];
+  List<Widget> tabs = [const TasksTab(), const SettingsTab()];
 
   @override
   Widget build(BuildContext context) {

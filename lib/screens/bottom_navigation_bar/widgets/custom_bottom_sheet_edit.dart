@@ -36,64 +36,66 @@ class _CustomBottomSheetEditState extends State<CustomBottomSheetEdit> {
           bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Form(
         key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.editTask,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            CustomTextFiled(
-              controller: taskNameContorller,
-              hintText: AppLocalizations.of(context)!.taskName,
-              validator: (value) {
-                if (value == null || value == " " || value.length < 2) {
-                  return AppLocalizations.of(context)!.taskNameValidator;
-                } else {
-                  return null;
-                }
-              },
-            ),
-            CustomTextFiled(
-              controller: taskDetailsContorller,
-              hintText: AppLocalizations.of(context)!.taskDetails,
-              maxLines: 5,
-              validator: (value) {
-                if (value == null || value == " " || value.length < 5) {
-                  return AppLocalizations.of(context)!.taskdetailsValidator;
-                } else {
-                  return null;
-                }
-              },
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: CustomElevatedButton(
-                  onPressed: isLoading
-                      ? null
-                      : () async {
-                          if (formKey.currentState!.validate()) {
-                            TaskModel editTask = widget.taskModel.copyWith(
-                                id: widget.taskModel.id,
-                                updatedName: taskNameContorller.text.trim(),
-                                updatedDetails:
-                                    taskDetailsContorller.text.trim(),
-                                date: widget.taskModel.date);
-                            setState(() {
-                              isLoading = true;
-                            });
-                            await provider.editTask(editTask);
-                            Navigator.of(context).pop();
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.editTask,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              CustomTextFiled(
+                controller: taskNameContorller,
+                hintText: AppLocalizations.of(context)!.taskName,
+                validator: (value) {
+                  if (value == null || value == " " || value.length < 2) {
+                    return AppLocalizations.of(context)!.taskNameValidator;
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              CustomTextFiled(
+                controller: taskDetailsContorller,
+                hintText: AppLocalizations.of(context)!.taskDetails,
+                maxLines: 5,
+                validator: (value) {
+                  if (value == null || value == " " || value.length < 5) {
+                    return AppLocalizations.of(context)!.taskdetailsValidator;
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: CustomElevatedButton(
+                    onPressed: isLoading
+                        ? null
+                        : () async {
+                            if (formKey.currentState!.validate()) {
+                              TaskModel editTask = widget.taskModel.copyWith(
+                                  id: widget.taskModel.id,
+                                  updatedName: taskNameContorller.text.trim(),
+                                  updatedDetails:
+                                      taskDetailsContorller.text.trim(),
+                                  date: widget.taskModel.date);
+                              setState(() {
+                                isLoading = true;
+                              });
+                              await provider.editTask(editTask);
+                              Navigator.of(context).pop();
 
-                            isLoading = false;
-                          }
-                        },
-                  text: AppLocalizations.of(context)!.save),
-            ),
-            const SizedBox(
-              height: 40,
-            )
-          ],
+                              isLoading = false;
+                            }
+                          },
+                    text: AppLocalizations.of(context)!.save),
+              ),
+              const SizedBox(
+                height: 40,
+              )
+            ],
+          ),
         ),
       ),
     );

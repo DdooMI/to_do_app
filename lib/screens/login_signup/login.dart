@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/providers/user_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/bottom_navigator_bar.dart';
@@ -51,34 +52,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 LoginTextFormFieldWidget(
                   controller: emailcontroller,
-                  hintText: "Enter your email",
+                  hintText: AppLocalizations.of(context)!.email,
                   prefixIcon: Icon(
                     Icons.email,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Email can't be empty";
-                    } else if (!isValidEmail(value)) {
-                      return "Invalid Email";
+                    if (value == null ||
+                        value.isEmpty ||
+                        !isValidEmail(value)) {
+                      return AppLocalizations.of(context)!.emailValidator;
                     }
                     return null;
                   },
                 ),
                 LoginTextFormFieldWidget(
                   controller: passwordcontroller,
-                  hintText: "Enter your password",
+                  hintText: AppLocalizations.of(context)!.password,
                   prefixIcon: Icon(
                     Icons.lock,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   password: true,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Password can't be empty";
-                    } else if (value.length < 7) {
-                      return "Password should be atleast 7 characters ";
+                    if (value == null || value.isEmpty || value.length < 8) {
+                      return AppLocalizations.of(context)!.passwordValidator;
                     }
                     return null;
                   },
@@ -88,26 +87,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Column(
                   children: [
-                    LoginButtonWidget(
-                        onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            await Provider.of<UserProvider>(context,
-                                    listen: false)
-                                .login(emailcontroller.text,
-                                    passwordcontroller.text)
-                                .then((value) {
-                              Navigator.of(context).pushReplacementNamed(
-                                  BottomNavigatorBar.routeName);
-                            });
-                          }
-                        },
-                        text: "Log in"),
+                    Provider.of<UserProvider>(context).loading
+                        ? const CircularProgressIndicator()
+                        : LoginButtonWidget(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()) {
+                                await Provider.of<UserProvider>(context,
+                                        listen: false)
+                                    .login(emailcontroller.text,
+                                        passwordcontroller.text)
+                                    .then((value) {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      BottomNavigatorBar.routeName);
+                                });
+                              }
+                            },
+                            text: AppLocalizations.of(context)!.login),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Don't you have an account?",
+                          AppLocalizations.of(context)!.dontHaveAccount,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
@@ -119,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .pushReplacementNamed(SignupScreen.routeName);
                             },
                             child: Text(
-                              "Register",
+                              AppLocalizations.of(context)!.signup,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium

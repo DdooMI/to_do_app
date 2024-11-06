@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/firebase/services.dart';
 import 'package:to_do_app/providers/dark_provider.dart';
+import 'package:to_do_app/providers/localization_provider.dart';
 import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_listTile_settings_widget.dart';
 import 'package:to_do_app/screens/login_signup/login.dart';
@@ -15,7 +17,7 @@ class SettingsTab extends StatelessWidget {
       body: Column(
         children: [
           CustomListtileSettingsWidget(
-              title: "Dark Mode",
+              title: AppLocalizations.of(context)!.darkMode,
               trailing: Switch(
                   trackOutlineColor: WidgetStateProperty.all(
                       Theme.of(context).colorScheme.primary),
@@ -31,7 +33,7 @@ class SettingsTab extends StatelessWidget {
                             value ? ThemeMode.dark : ThemeMode.light);
                   })),
           CustomListtileSettingsWidget(
-              title: "Language",
+              title: AppLocalizations.of(context)!.language,
               trailing: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
@@ -42,12 +44,12 @@ class SettingsTab extends StatelessWidget {
                     items: [
                       DropdownMenuItem(
                         value: 'en',
-                        child: Text("English",
+                        child: Text(AppLocalizations.of(context)!.english,
                             style: Theme.of(context).textTheme.bodyMedium),
                       ),
                       DropdownMenuItem(
                         value: 'ar',
-                        child: Text("Arabic",
+                        child: Text(AppLocalizations.of(context)!.arabic,
                             style: Theme.of(context).textTheme.bodyMedium),
                       )
                     ],
@@ -55,10 +57,16 @@ class SettingsTab extends StatelessWidget {
                     dropdownColor: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(20),
                     underline: Container(),
-                    value: "en",
+                    value: Provider.of<LocalizationProvider>(context,
+                            listen: false)
+                        .appLocal,
                     style: Theme.of(context).textTheme.titleSmall,
                     onChanged: (value) {
-                      if (value != null) {}
+                      if (value != null) {
+                        Provider.of<LocalizationProvider>(context,
+                                listen: false)
+                            .changeLocal(value);
+                      }
                     }),
               )),
           InkWell(
@@ -68,7 +76,7 @@ class SettingsTab extends StatelessWidget {
               Navigator.of(context).popAndPushNamed(LoginScreen.routeName);
             },
             child: CustomListtileSettingsWidget(
-                title: "Sign Out",
+                title: AppLocalizations.of(context)!.signout,
                 trailing: Icon(
                   Icons.logout_outlined,
                   size: 40,

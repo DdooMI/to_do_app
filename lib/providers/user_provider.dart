@@ -7,12 +7,11 @@ class UserProvider extends ChangeNotifier {
   UserModel? userModel;
   bool loading = false;
   Future login(String email, String password) async {
-    loading = true;
-    notifyListeners();
     try {
-      loading = false;
+      loading = true;
       notifyListeners();
       userModel = await Services.login(email, password);
+      loading = false;
       notifyListeners();
     } catch (e) {
       loading = false;
@@ -29,12 +28,15 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future signup(UserModel userModel, String password) async {
-    loading = true;
-
     try {
+      loading = true;
+      notifyListeners();
       userModel = await Services.signup(userModel, password);
+      loading = false;
       notifyListeners();
     } catch (e) {
+      loading = false;
+      notifyListeners();
       Fluttertoast.showToast(
           msg: "Invalid email or password or name",
           toastLength: Toast.LENGTH_SHORT,

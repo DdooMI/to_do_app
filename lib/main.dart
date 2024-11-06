@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do_app/firebase_options.dart';
@@ -21,7 +22,8 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<LocalizationProvider>(
-        create: (_) => LocalizationProvider()),
+        create: (_) =>
+            LocalizationProvider(locale: prefs.getString("local") ?? "en")),
     ChangeNotifierProvider<DarkProvider>(
         create: (_) => DarkProvider(dark: prefs.getBool("isDark") ?? false)),
     ChangeNotifierProvider<TaskProvider>(create: (_) => TaskProvider()),
@@ -40,6 +42,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale:
+          Locale(Provider.of<LocalizationProvider>(context).appLocal ?? "en"),
       theme: ThemeApp.lightTheme,
       darkTheme: ThemeApp.darkTheme,
       themeMode: Provider.of<DarkProvider>(context).appThemeMode,

@@ -1,5 +1,6 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/models/task_model.dart';
 import 'package:to_do_app/providers/task_provider.dart';
@@ -14,6 +15,7 @@ class TasksTab extends StatefulWidget {
 
 class _TasksTabState extends State<TasksTab> {
   DateTime focusDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -103,7 +105,7 @@ class _TasksTabState extends State<TasksTab> {
                   return Expanded(
                     child: Center(
                       child: Text(
-                        "No Tasks Today",
+                        AppLocalizations.of(context)!.noTasks,
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!

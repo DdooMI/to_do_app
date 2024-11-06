@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/models/task_model.dart';
@@ -37,17 +38,15 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Add new task",
+              AppLocalizations.of(context)!.addTask,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             CustomTextFiled(
               controller: taskNameContorller,
-              hintText: "Task name",
+              hintText: AppLocalizations.of(context)!.taskName,
               validator: (value) {
-                if (value == null || value == " ") {
-                  return 'the task name can not be empty';
-                } else if (value.length < 5) {
-                  return 'task name can not be less than 5';
+                if (value == null || value == " " || value.length < 2) {
+                  return AppLocalizations.of(context)!.taskNameValidator;
                 } else {
                   return null;
                 }
@@ -55,20 +54,18 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
             ),
             CustomTextFiled(
               controller: taskDetailsContorller,
-              hintText: "Task details",
+              hintText: AppLocalizations.of(context)!.taskDetails,
               maxLines: 5,
               validator: (value) {
-                if (value == null || value == " ") {
-                  return 'the task details can not be empty';
-                } else if (value.length < 5) {
-                  return 'task details can not be less than 5';
+                if (value == null || value == " " || value.length < 5) {
+                  return AppLocalizations.of(context)!.taskdetailsValidator;
                 } else {
                   return null;
                 }
               },
             ),
             Text(
-              "Select Date",
+              AppLocalizations.of(context)!.taskDate,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             TextButton(
@@ -106,7 +103,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                             });
                           }
                         },
-                  text: 'Add'),
+                  text: AppLocalizations.of(context)!.add),
             ),
             const SizedBox(
               height: 40,

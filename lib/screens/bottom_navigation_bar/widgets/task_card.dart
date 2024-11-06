@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/models/task_model.dart';
+import 'package:to_do_app/providers/localization_provider.dart';
 import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_bottom_sheet_edit.dart';
 import 'package:to_do_app/theme/colors.dart';
@@ -35,9 +37,13 @@ class TaskCardWidget extends StatelessWidget {
               backgroundColor: const Color(0xFFFE4A49),
               foregroundColor: Colors.white,
               icon: Icons.delete,
-              label: 'Delete',
-              borderRadius:
-                  const BorderRadius.horizontal(left: Radius.circular(12)),
+              label: AppLocalizations.of(context)!.delete,
+              borderRadius: Provider.of<LocalizationProvider>(context,
+                              listen: false)
+                          .appLocal ==
+                      "en"
+                  ? const BorderRadius.horizontal(left: Radius.circular(12))
+                  : const BorderRadius.horizontal(right: Radius.circular(12)),
             ),
             dayBefore
                 ? Container()
@@ -57,7 +63,7 @@ class TaskCardWidget extends StatelessWidget {
                     backgroundColor: ColorsApp.primaryColor,
                     foregroundColor: Colors.white,
                     icon: Icons.edit,
-                    label: 'Edit',
+                    label: AppLocalizations.of(context)!.edit,
                   ),
           ],
         ),

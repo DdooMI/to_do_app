@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/models/user_model.dart';
 import 'package:to_do_app/providers/user_provider.dart';
@@ -50,51 +51,52 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     LoginTextFormFieldWidget(
                       controller: namecontroller,
-                      hintText: "Enter your name",
+                      hintText: AppLocalizations.of(context)!.name,
                       prefixIcon: Icon(
                         Icons.person,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       keyboardType: TextInputType.text,
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Name can't be empty";
-                        } else if (value.length < 3) {
-                          return "Invalid Name";
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 2) {
+                          return AppLocalizations.of(context)!.nameValidator;
                         }
                         return null;
                       },
                     ),
                     LoginTextFormFieldWidget(
                       controller: emailcontroller,
-                      hintText: "Enter your email",
+                      hintText: AppLocalizations.of(context)!.email,
                       prefixIcon: Icon(
                         Icons.email,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Email can't be empty";
-                        } else if (!isValidEmail(value)) {
-                          return "Invalid Email";
+                        if (value == null ||
+                            value.isEmpty ||
+                            !isValidEmail(value)) {
+                          return AppLocalizations.of(context)!.emailValidator;
                         }
                         return null;
                       },
                     ),
                     LoginTextFormFieldWidget(
                       controller: passwordcontroller,
-                      hintText: "Enter your password",
+                      hintText: AppLocalizations.of(context)!.password,
                       prefixIcon: Icon(
                         Icons.lock,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       password: true,
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Password can't be empty";
-                        } else if (value.length < 7) {
-                          return "Password should be atleast 7 characters ";
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 8) {
+                          return AppLocalizations.of(context)!
+                              .passwordValidator;
                         }
                         return null;
                       },
@@ -106,29 +108,31 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 Column(
                   children: [
-                    LoginButtonWidget(
-                        onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            await Provider.of<UserProvider>(context,
-                                    listen: false)
-                                .signup(
-                                    UserModel(
-                                        name: namecontroller.text,
-                                        email: emailcontroller.text),
-                                    passwordcontroller.text)
-                                .then((value) {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(LoginScreen.routeName);
-                            });
-                          }
-                        },
-                        text: "Sign up"),
+                    Provider.of<UserProvider>(context).loading
+                        ? const CircularProgressIndicator()
+                        : LoginButtonWidget(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()) {
+                                await Provider.of<UserProvider>(context,
+                                        listen: false)
+                                    .signup(
+                                        UserModel(
+                                            name: namecontroller.text,
+                                            email: emailcontroller.text),
+                                        passwordcontroller.text)
+                                    .then((value) {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      LoginScreen.routeName);
+                                });
+                              }
+                            },
+                            text: AppLocalizations.of(context)!.signup),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Do you have an account?",
+                          AppLocalizations.of(context)!.haveAcoount,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
@@ -140,7 +144,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   .pushReplacementNamed(LoginScreen.routeName);
                             },
                             child: Text(
-                              "Log in",
+                              AppLocalizations.of(context)!.login,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium

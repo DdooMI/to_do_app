@@ -28,7 +28,7 @@ class ThemeApp {
       appBarTheme: AppBarTheme(
           backgroundColor: ColorsApp.primaryColor,
           foregroundColor: Colors.white,
-          centerTitle: false,
+          centerTitle: true,
           titleTextStyle: TextStyle(
               fontSize: 30,
               color: ColorsApp.bgColorLight,
@@ -45,7 +45,7 @@ class ThemeApp {
           type: BottomNavigationBarType.fixed,
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          unselectedIconTheme: IconThemeData(color: Colors.grey[350], size: 35),
+          unselectedIconTheme: IconThemeData(color: Colors.grey, size: 35),
           selectedIconTheme:
               IconThemeData(color: ColorsApp.primaryColor, size: 35)),
       colorScheme: ColorScheme(
@@ -84,7 +84,7 @@ class ThemeApp {
     appBarTheme: AppBarTheme(
         backgroundColor: ColorsApp.primaryColor,
         foregroundColor: Colors.white,
-        centerTitle: false,
+        centerTitle: true,
         titleTextStyle: TextStyle(
             fontSize: 30,
             color: ColorsApp.bgColorDark,
@@ -111,7 +111,7 @@ class ThemeApp {
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        unselectedIconTheme: IconThemeData(color: Colors.grey[350], size: 35),
+        unselectedIconTheme: IconThemeData(color: Colors.grey, size: 35),
         selectedIconTheme:
             IconThemeData(color: ColorsApp.primaryColor, size: 35)),
   );

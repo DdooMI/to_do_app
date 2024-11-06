@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/models/task_model.dart';
 import 'package:to_do_app/providers/task_provider.dart';
@@ -39,17 +40,15 @@ class _CustomBottomSheetEditState extends State<CustomBottomSheetEdit> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Edit task",
+              AppLocalizations.of(context)!.editTask,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             CustomTextFiled(
               controller: taskNameContorller,
-              hintText: "Task name",
+              hintText: AppLocalizations.of(context)!.taskName,
               validator: (value) {
-                if (value == null || value == " ") {
-                  return 'the task name can not be empty';
-                } else if (value.length < 5) {
-                  return 'task name can not be less than 5';
+                if (value == null || value == " " || value.length < 2) {
+                  return AppLocalizations.of(context)!.taskNameValidator;
                 } else {
                   return null;
                 }
@@ -57,13 +56,11 @@ class _CustomBottomSheetEditState extends State<CustomBottomSheetEdit> {
             ),
             CustomTextFiled(
               controller: taskDetailsContorller,
-              hintText: "Task details",
+              hintText: AppLocalizations.of(context)!.taskDetails,
               maxLines: 5,
               validator: (value) {
-                if (value == null || value == " ") {
-                  return 'the task details can not be empty';
-                } else if (value.length < 5) {
-                  return 'task details can not be less than 5';
+                if (value == null || value == " " || value.length < 5) {
+                  return AppLocalizations.of(context)!.taskdetailsValidator;
                 } else {
                   return null;
                 }
@@ -91,7 +88,7 @@ class _CustomBottomSheetEditState extends State<CustomBottomSheetEdit> {
                             isLoading = false;
                           }
                         },
-                  text: 'Save'),
+                  text: AppLocalizations.of(context)!.save),
             ),
             const SizedBox(
               height: 40,

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_elevated_button.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_text_filed.dart';
 
+// ignore: must_be_immutable
 class CustomDialog extends StatefulWidget {
   CustomDialog(
       {required this.taskName,

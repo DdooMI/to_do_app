@@ -6,16 +6,21 @@ class CustomTextFiled extends StatelessWidget {
       required this.controller,
       this.maxLines,
       this.validator,
+      this.readOnly,
+      this.color,
       super.key});
   final String? hintText;
   final TextEditingController? controller;
   final int? maxLines;
   final String? Function(String?)? validator;
+  final bool? readOnly;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
+        readOnly: readOnly ?? false,
         controller: controller,
         validator: validator,
         maxLines: maxLines,
@@ -29,11 +34,13 @@ class CustomTextFiled extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.secondary, width: 2)),
+                    color: color ?? Theme.of(context).colorScheme.secondary,
+                    width: 2)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.secondary, width: 2)),
+                    color: color ?? Theme.of(context).colorScheme.secondary,
+                    width: 2)),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(

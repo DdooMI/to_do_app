@@ -26,6 +26,7 @@
     "emailValidator":"بريد الكتروني غير صالح",
     "passwordValidator":"يجب ان تكون كلمة السر من 8 احرف علي الاقل",
     "nameValidator":"يجب ان يكون الاسم من حرفين علي الاقل",
-    "emailPasswordValidator":"البريد الالكتروني أو كلمة السر غير صالح"
+    "emailPasswordValidator":"البريد الالكتروني أو كلمة السر غير صالح",
+    "taskInfo":"معلومات المهمة"
 
 }

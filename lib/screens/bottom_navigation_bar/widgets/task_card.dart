@@ -6,11 +6,18 @@ import 'package:to_do_app/models/task_model.dart';
 import 'package:to_do_app/providers/localization_provider.dart';
 import 'package:to_do_app/providers/task_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_bottom_sheet_edit.dart';
+import 'package:to_do_app/screens/bottom_navigation_bar/widgets/custom_dialog.dart';
 import 'package:to_do_app/theme/colors.dart';
 
-class TaskCardWidget extends StatelessWidget {
+class TaskCardWidget extends StatefulWidget {
   const TaskCardWidget({required this.taskModel, super.key});
   final TaskModel taskModel;
+
+  @override
+  State<TaskCardWidget> createState() => _TaskCardWidgetState();
+}
+
+class _TaskCardWidgetState extends State<TaskCardWidget> {
   @override
   Widget build(BuildContext context) {
     double sheight = MediaQuery.of(context).size.height;
@@ -18,7 +25,7 @@ class TaskCardWidget extends StatelessWidget {
     bool dayBefore = Provider.of<TaskProvider>(context)
         .selectedDate
         .isBefore(DateTime.now().subtract(const Duration(days: 1)));
-    bool taskisDone = taskModel.isDone;
+    bool taskisDone = widget.taskModel.isDone;
 
     return Card(
       elevation: 5,
@@ -32,7 +39,7 @@ class TaskCardWidget extends StatelessWidget {
             SlidableAction(
               onPressed: (context) async {
                 Provider.of<TaskProvider>(context, listen: false)
-                    .deleteTask(taskModel.id);
+                    .deleteTask(widget.taskModel.id);
               },
               backgroundColor: const Color(0xFFFE4A49),
               foregroundColor: Colors.white,
@@ -56,7 +63,7 @@ class TaskCardWidget extends StatelessWidget {
                           context: context,
                           builder: (context) {
                             return CustomBottomSheetEdit(
-                              taskModel: taskModel,
+                              taskModel: widget.taskModel,
                             );
                           });
                     },
@@ -75,51 +82,72 @@ class TaskCardWidget extends StatelessWidget {
           child: SizedBox(
             height: sheight * .12,
             child: Center(
-              child: ListTile(
-                leading: Container(
-                  width: 4,
-                  height: sheight * 0.09,
-                  color: taskisDone
-                      ? ColorsApp.greenColor
-                      : Theme.of(context).colorScheme.primary,
-                ),
-                title: Text(
-                  taskModel.name,
-                  style: taskisDone
-                      ? Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(color: ColorsApp.greenColor)
-                      : Theme.of(context).textTheme.titleMedium,
-                ),
-                subtitle: Text(
-                  taskModel.details,
-                  style: taskisDone
-                      ? Theme.of(context)
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(color: ColorsApp.greenColor)
-                      : Theme.of(context).textTheme.titleSmall,
-                ),
-                trailing: Checkbox(
-                    checkColor: Colors.white,
-                    side: BorderSide(
-                        width: 2, color: Theme.of(context).colorScheme.primary),
-                    fillColor: taskisDone
-                        ? WidgetStatePropertyAll(ColorsApp.greenColor)
-                        : const WidgetStatePropertyAll(Colors.white),
-                    value: taskModel.isDone,
-                    onChanged: (value) async {
-                      TaskModel editTask = taskModel.copyWith(
-                          id: taskModel.id,
-                          isDone: !taskModel.isDone,
-                          updatedName: taskModel.name,
-                          updatedDetails: taskModel.details,
-                          date: taskModel.date);
+              child: InkWell(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CustomDialog(
+                          taskName: widget.taskModel.name,
+                          taskDetails: widget.taskModel.details,
+                          taskDate: widget.taskModel.date,
+                        );
+                      });
+                },
+                child: ListTile(
+                  leading: Container(
+                    width: 4,
+                    height: sheight * 0.09,
+                    color: taskisDone
+                        ? ColorsApp.greenColor
+                        : Theme.of(context).colorScheme.primary,
+                  ),
+                  title: Text(
+                    widget.taskModel.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: taskisDone
+                        ? Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: ColorsApp.greenColor)
+                        : Theme.of(context).textTheme.titleMedium,
+                  ),
+                  subtitle: Expanded(
+                    child: Text(
+                      widget.taskModel.details,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: taskisDone
+                          ? Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(color: ColorsApp.greenColor)
+                          : Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ),
+                  trailing: ElevatedButton(
+                      onPressed: () async {
+                        TaskModel editTask = widget.taskModel.copyWith(
+                            id: widget.taskModel.id,
+                            isDone: !widget.taskModel.isDone,
+                            updatedName: widget.taskModel.name,
+                            updatedDetails: widget.taskModel.details,
+                            date: widget.taskModel.date);
 
-                      await Provider.of<TaskProvider>(context, listen: false)
-                          .editTask(editTask);
-                    }),
+                        await Provider.of<TaskProvider>(context, listen: false)
+                            .editTask(editTask);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: taskisDone
+                              ? ColorsApp.greenColor
+                              : Theme.of(context).colorScheme.primary),
+                      child: Icon(
+                        Icons.check,
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        size: 35,
+                      )),
+                ),
               ),
             ),
           ),

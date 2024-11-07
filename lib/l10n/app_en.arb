@@ -26,6 +26,7 @@
     "emailValidator":"Invalid email address",
     "passwordValidator":"Password must be atleast 8 digit",
     "nameValidator":"Name must be atleast 2 digit",
-    "emailPasswordValidator":"Invalid email or password"
+    "emailPasswordValidator":"Invalid email or password",
+    "taskInfo":"Task Information"
 
 }

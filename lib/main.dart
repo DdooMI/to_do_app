@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,7 +12,6 @@ import 'package:to_do_app/providers/user_provider.dart';
 import 'package:to_do_app/screens/bottom_navigation_bar/bottom_navigator_bar.dart';
 import 'package:to_do_app/screens/login_signup/login.dart';
 import 'package:to_do_app/screens/login_signup/signup.dart';
-import 'package:to_do_app/screens/splash/splash_screen.dart';
 import 'package:to_do_app/theme/theme.dart';
 
 Future<void> main() async {
@@ -50,12 +50,13 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeApp.darkTheme,
       themeMode: Provider.of<DarkProvider>(context).appThemeMode,
       routes: {
-        SplashScreen.routeName: (_) => const SplashScreen(),
         BottomNavigatorBar.routeName: (_) => const BottomNavigatorBar(),
         LoginScreen.routeName: (_) => const LoginScreen(),
         SignupScreen.routeName: (_) => const SignupScreen()
       },
-      home: const SplashScreen(),
+      home: (FirebaseAuth.instance.currentUser?.uid == null)
+          ? const LoginScreen()
+          : const BottomNavigatorBar(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -31,7 +31,7 @@ class _TasksTabState extends State<TasksTab> {
             },
             showTimelineHeader: false,
             firstDate: DateTime(2024),
-            lastDate: DateTime(2025),
+            lastDate: DateTime(2030),
             focusDate: focusDate,
             dayProps: EasyDayProps(
                 todayStyle: DayStyle(
@@ -89,44 +89,42 @@ class _TasksTabState extends State<TasksTab> {
                         borderRadius: BorderRadius.circular(15)))),
           ),
         ),
-        StreamBuilder<List<TaskModel>?>(
+        Expanded(
+          child: StreamBuilder<List<TaskModel>?>(
             stream: Provider.of<TaskProvider>(context, listen: false)
                 .getAllTasksByDate(focusDate),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               } else {
                 var data = snapshot.data;
                 if (data == null || data.isEmpty) {
-                  return Expanded(
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.noTasks,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(fontSize: 22),
-                      ),
+                  return Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.noTasks,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(fontSize: 22),
                     ),
                   );
                 }
-                return Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    itemBuilder: (context, index) {
-                      return TaskCardWidget(
-                        taskModel: data[index],
-                      );
-                    },
-                    itemCount: data.length,
-                  ),
+                return ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  itemBuilder: (context, index) {
+                    return TaskCardWidget(
+                      taskModel: data[index],
+                    );
+                  },
+                  itemCount: data.length,
                 );
               }
-            })
+            },
+          ),
+        )
+
       ],
     );
   }

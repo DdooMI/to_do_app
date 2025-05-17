@@ -69,6 +69,6 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: tabs[currentIndex]);
+        body: SafeArea(child: tabs[currentIndex]));
   }
 }

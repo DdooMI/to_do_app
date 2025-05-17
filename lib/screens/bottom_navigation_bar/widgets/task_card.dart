@@ -113,19 +113,18 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                             ?.copyWith(color: ColorsApp.greenColor)
                         : Theme.of(context).textTheme.titleMedium,
                   ),
-                  subtitle: Expanded(
-                    child: Text(
+                    subtitle: Text(
                       widget.taskModel.details,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: taskisDone
                           ? Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(color: ColorsApp.greenColor)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: ColorsApp.greenColor)
                           : Theme.of(context).textTheme.titleSmall,
                     ),
-                  ),
+
                   trailing: ElevatedButton(
                       onPressed: () async {
                         TaskModel editTask = widget.taskModel.copyWith(
